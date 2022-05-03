@@ -10,29 +10,45 @@ let productColors;
 let productImage;
 let productAltText;
 let productDescription;
+let numberOfProducts;
 
-//Request for the products
-request.open(getRequest, "http://localhost:3000/api/products/" + productID);
-request.onreadystatechange = function () {
-  if (request.readyState === 4 && request.status === 200) {
-    product = JSON.parse(request.responseText);
-
-    productColors = product.colors;
-    productName = product.name;
-    productPrice = product.price;
-    productImage = product.imageUrl;
-    productDescription = product.description;
-    productAltText = product.altTxt;
-
-    document.querySelector("#items").innerHTML += `
-        <a href="./product.html?id=${productID}">
-            <article>
-                <img src="${productImage}" alt="${productAltText}">
-                <h3 class="productName">${productName}</h3>
-                <p class="productDescription">${productDescription}</p>
-            </article>
-        </a>
-        `;
-  }
-};
+// Get number of products [✅]
+request.open(getRequest, apiUrl);
 request.send();
+request.onload = function () {
+  numberOfProducts = JSON.parse(request.response).length;
+};
+for (let i = 0; i < numberOfProducts; i++) {
+  //Get product ID
+  request.open(getRequest, apiUrl, false);
+  request.send();
+  request.onload = function () {
+    product = JSON.parse(request.response)[i];
+    productID = product._id;
+    console.log(productID);
+  };
+  //Request for inserting the products on landing page [✅]
+  request.open(getRequest, `${apiUrl}/${productID}`, false);
+  request.onreadystatechange = function () {
+    if (request.readyState === 4 && request.status === 200) {
+      product = JSON.parse(request.response);
+
+      productName = product.name;
+      productPrice = product.price;
+      productImage = product.imageUrl;
+      productDescription = product.description;
+      productAltText = product.altTxt;
+
+      document.querySelector("#items").innerHTML += `
+          <a href="./product.html?id=${productID}">
+              <article>
+                  <img src="${productImage}" alt="${productAltText}">
+                  <h3 class="productName">${productName}</h3>
+                  <p class="productDescription">${productDescription}</p>
+              </article>
+          </a>
+          `;
+    };
+  };
+  request.send();
+}
