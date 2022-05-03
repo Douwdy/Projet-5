@@ -18,17 +18,23 @@ request.send();
 request.onload = function () {
   numberOfProducts = JSON.parse(request.response).length;
 };
+
 for (let i = 0; i < numberOfProducts; i++) {
   //Get product ID
-  request.open(getRequest, apiUrl, false);
+  request.open(getRequest, apiUrl);
   request.send();
-  request.onload = function () {
-    product = JSON.parse(request.response)[i];
-    productID = product._id;
-    console.log(productID);
+  request.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      product = JSON.parse(request.response[i]);
+      productID = product._id;
+      console.log(productID);
+    } else {
+      console.log("Erreur lors de la récupération de l'ID du produit");
+    }
   };
   //Request for inserting the products on landing page [✅]
-  request.open(getRequest, `${apiUrl}/${productID}`, false);
+  request.open(getRequest, `${apiUrl}/${productID}`);
+  request.send();
   request.onreadystatechange = function () {
     if (request.readyState === 4 && request.status === 200) {
       product = JSON.parse(request.response);
@@ -48,7 +54,8 @@ for (let i = 0; i < numberOfProducts; i++) {
               </article>
           </a>
           `;
-    };
+    } else {
+      console.log("Erreur lors de la récupération du produit");
+    }
   };
-  request.send();
 }
