@@ -405,7 +405,7 @@ if (page.match("cart")) {
 //----------------------------------------------------------------
 // fonction récupérations des id puis mis dans un tableau
 //----------------------------------------------------------------
-// définition du panier quine comportera que les id des produits choisi du local storage
+// définition du panier qui ne comportera que les id des produits choisi du local storage
 let panierId = [];
 function tableauId() {
 // appel des ressources
@@ -462,7 +462,7 @@ function envoiPaquet() {
       .then((res) => res.json())
       .then((data) => {
         // envoyé à la page confirmation, autre écriture de la valeur "./confirmation.html?commande=${data.orderId}"
-        window.location.href = `/front/html/confirmation.html?commande=${data.orderId}`;
+        window.location.href = `/html/confirmation.html?commande=${data.orderId}`;
       })
       .catch(function (err) {
         console.log(err);
