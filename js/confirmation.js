@@ -1,5 +1,5 @@
-/* Getting the value of the parameter "commande" from the URL and putting it in the HTML element with
-the id "orderId". */
+/* Obtenir la valeur du paramètre "commande" de l'URL et le met dans l'élément HTML avec
+l'identifiant "orderId". */
 const id = new URL(window.location.href).searchParams.get("commande");
 console.log(id);
 

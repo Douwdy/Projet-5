@@ -6,12 +6,13 @@ function productDisplay(index) {
   let productDisplayZone = document.querySelector("#items");
   // for loop to display all products
   for (let product of index) {
-    productDisplayZone.innerHTML += `<a href="./product.html?_id=${product._id}">
-    <article>
-      <img src="${product.imageUrl}" alt="${product.altTxt}">
-      <h3 class="productName">${product.name}</h3>
-      <p class="productDescription">${product.description}</p>
-    </article>
+    productDisplayZone.innerHTML += 
+    `<a href="./product.html?_id=${product._id}">
+      <article>
+        <img src="${product.imageUrl}" alt="${product.altTxt}">
+        <h3 class="productName">${product.name}</h3>
+        <p class="productDescription">${product.description}</p>
+      </article>
     </a>`;
   }
 }
